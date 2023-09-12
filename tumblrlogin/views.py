@@ -1,6 +1,6 @@
 from secrets import token_urlsafe
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.http.request import HttpRequest
 from django.conf import settings
 
@@ -44,6 +44,10 @@ def login(request: HttpRequest):
     #return tumblr_oauth.authorize_redirect(request)
 
 def redirect_callback(request: HttpRequest):
-    req = tumblr.parse_request_uri_response(request.get_full_path(), state=request.session.get("state"))
-    print(req)
-    return ""
+    if not request.GET.get("state") or request.GET.get("state") != request.session.get("state"):
+        return HttpResponse("State missing")
+    else:
+        return redirect(
+            tumblr.prepare_token_request("https://api.tumblr.com/v2/oauth2/token", request.get_full_path(), state=request.session.get("state"))
+        )
+    #req = tumblr.parse_request_uri_response(request.get_full_path(), state=request.session.get("state"))
