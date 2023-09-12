@@ -20,6 +20,37 @@ env = environ.Env(
 )
 environ.Env.read_env(BASE_DIR.joinpath(".env"))
 
+OAUTH_CONSUMER_KEY=env("OAUTH_CONSUMER_KEY")
+OAUTH_REDIRECT_URL=env("OAUTH_REDIRECT_URL")
+
+# OAuth client config
+# https://docs.authlib.org/en/latest/client/django.html#configuration
+AUTHLIB_OAUTH_CLIENTS = {
+    "tumblr": {
+
+        "request_token_url":"https://www.tumblr.com/oauth2/authorize",
+
+        "access_token_url":"api.tumblr.com/v2/oauth2/token",
+        "authorize_url":"www.tumblr.com/oauth2/authorize",
+        "authorize_params": {
+            "scope": [],
+            "state": "meow",
+         "redirect_uri": OAUTH_REDIRECT_URL,
+
+        "client_id": env("OAUTH_CONSUMER_KEY"),
+        },
+        "api_base_url":"https://api.tumblr.com",
+
+        "client_kwargs": {
+            "response_type": "code"
+        },
+        
+        "client_id": env("OAUTH_CONSUMER_KEY"),
+        "response_type": "code",
+        "redirect_uri": OAUTH_REDIRECT_URL
+    }
+}
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -130,3 +161,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Session config
+SESSION_ENGINE = "django.contrib.sessions.backends.file"
