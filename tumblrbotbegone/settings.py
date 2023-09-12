@@ -75,6 +75,7 @@ INSTALLED_APPS = [
 
     "tumblrbotbegone",
     "tumblrlogin",
+    "tumblrisitabot",
 ]
 
 MIDDLEWARE = [
