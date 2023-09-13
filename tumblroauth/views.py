@@ -33,7 +33,7 @@ def index(request : HttpRequest):
         client = tumblr_client(access_token["access_token"])
         return HttpResponse(str(client.info()))
     
-    return render(request, "tumblrlogin/login.html")
+    return render(request, "tumblroauth/login.html")
 
 
 def logout(request):
@@ -54,6 +54,7 @@ tumblr = WebApplicationClient(
     # state is automatically hjandled
     redirect_uri=settings.OAUTH_REDIRECT_URL,
 )
+
 def login(request: HttpRequest):
     # https://www.tumblr.com/docs/en/api/v2#oauth2authorize---authorization-request
     request.session["state"] = token_urlsafe()
