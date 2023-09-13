@@ -21,6 +21,7 @@ env = environ.Env(
 environ.Env.read_env(BASE_DIR.joinpath(".env"))
 
 OAUTH_CONSUMER_KEY=env("OAUTH_CONSUMER_KEY")
+OAUTH_CONSUMER_SECRET=env("OAUTH_CONSUMER_SECRET")
 OAUTH_REDIRECT_URL=env("OAUTH_REDIRECT_URL")
 
 # OAuth client config
