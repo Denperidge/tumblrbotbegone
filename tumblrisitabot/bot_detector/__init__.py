@@ -1,0 +1,1 @@
+from .funcs import is_it_a_bot
