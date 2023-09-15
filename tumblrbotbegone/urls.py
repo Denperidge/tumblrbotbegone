@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path("", include("tumblroauth.urls")),
+    path("isitabot/", include("tumblrisitabot.urls")),
     path("admin/", admin.site.urls),
 ]

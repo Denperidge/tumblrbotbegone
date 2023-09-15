@@ -2,7 +2,7 @@ from django.conf import settings
 
 from pytumblr import TumblrRestClient, TumblrRequest
 
-def tumblr_client(oauth_token: str, token_type="Bearer"):
+def tumblr_client(oauth_token: str=None, token_type="Bearer"):
     client = TumblrRestClient(
         consumer_key=settings.OAUTH_CONSUMER_KEY,
         consumer_secret=settings.OAUTH_CONSUMER_SECRET)
@@ -10,9 +10,11 @@ def tumblr_client(oauth_token: str, token_type="Bearer"):
         consumer_key=settings.OAUTH_CONSUMER_KEY,
         consumer_secret=settings.OAUTH_CONSUMER_SECRET
     )
-    request.oauth = None
-    request.headers["Authorization"] = f"{token_type} {oauth_token}"
-    print(request.headers)
+
+    if oauth_token:
+        request.oauth = None
+        request.headers["Authorization"] = f"{token_type} {oauth_token}"
 
     client.request = request
+    
     return client
